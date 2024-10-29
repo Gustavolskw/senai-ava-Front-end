@@ -1,3 +1,4 @@
+import CadastroAluno from "@/views/CadastroAluno.vue";
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import TheAlunos from "@/views/TheAlunos.vue";
@@ -23,6 +24,11 @@ const routes = [
         path: "/alunos",
         name: "alunos",
         component: TheAlunos
+    },
+    {
+        path: "/alunos/register",
+        name: "registerAluno",
+        component: CadastroAluno
     }
 ];
 

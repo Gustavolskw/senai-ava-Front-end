@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+  <nav class="navbar navbar-expand-lg navbar bg-body w-100">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img class="logo-img" src="/img/logo.png" alt="logo do senai"
+        <img class="logo-img" src="/img/image 4.png" alt="logo do senai"
       /></a>
       <button
         class="navbar-toggler"
@@ -16,26 +16,17 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div
-        class="collapse navbar-collapse mx-2"
-        id="navbarSupportedContent"
-        data-bs-theme="dark"
-      >
+      <div class="collapse navbar-collapse mx-2" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item my-auto">
             <router-link class="text-decoration-none" :to="{ name: 'home' }">
-              <a class="ranking-text"
-                >Ranking <i class="bi bi-award-fill text-white"></i
-              ></a>
+              <a class="nav-link fw-bold fs-5">Inicio </a>
             </router-link>
           </li>
-          <li class="nav-item ms-4" v-if="isLogged">
-            <router-link
-              class="nav-link fw-bold fs-5"
-              href="#"
-              :to="{ name: 'agendamentos' }"
-              >Agendamentos</router-link
-            >
+          <li class="nav-item my-auto">
+            <router-link class="text-decoration-none" :to="{ name: 'home' }">
+              <a class="nav-link fw-bold fs-5">Ranking </a>
+            </router-link>
           </li>
           <li class="nav-item ms-2" v-if="isLogged">
             <router-link
@@ -52,13 +43,13 @@
         <div v-if="isLogged" class="d-flex align-items-center gap-2">
           <div class="dropdown">
             <i
-              class="bi bi-person-circle fs-2 text-white dropdown-toggle"
+              class="bi bi-person-circle fs-2 dropdown-toggle"
               id="dropdownMenuButton"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             ></i>
             <ul
-              class="dropdown-menu dropdown-menu-end"
+              class="dropdown-menu dropdown-menu-start"
               aria-labelledby="dropdownMenuButton"
               data-bs-display="static"
             >
@@ -75,7 +66,7 @@
             </ul>
           </div>
 
-          <p class="text-white fs-5 my-0 mx-1">{{ name }}</p>
+          <p class="text-black fs-5 my-0 mx-1">{{ name }}</p>
         </div>
       </div>
     </div>
@@ -89,12 +80,15 @@ const name = ref();
 const isLogged = ref(false);
 
 onMounted(() => {
-  isLogged.value = false;
+  isLogged.value = true;
   name.value = "Gustavo.luis";
 });
 </script>
 
 <style scoped>
+#dropdownMenuButton {
+  cursor: pointer;
+}
 .dropdown-toggle::after {
   display: none;
 }
@@ -103,6 +97,17 @@ onMounted(() => {
   font-weight: bolder;
   text-decoration: none;
   color: gold;
+}
+.dropdown-menu {
+  background-color: white;
+}
+
+.dropdown-item {
+  color: black;
+}
+.dropdown-item:hover {
+  background-color: white;
+  border-bottom: 2px solid gray;
 }
 .ranking-text:hover {
   text-decoration: underline;
