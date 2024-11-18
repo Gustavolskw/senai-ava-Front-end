@@ -1,3 +1,4 @@
+// store/state.js
 export default {
-    meals: ["Salmon"]
-}
+    token: localStorage.getItem('token') || '',
+};

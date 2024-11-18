@@ -1,6 +1,12 @@
 <script setup>
 defineProps({
-  show: Boolean,
+  show: {
+    type: Boolean,
+  },
+  isError: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 

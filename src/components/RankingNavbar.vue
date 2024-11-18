@@ -52,7 +52,7 @@
 <script setup>
 import axiosClient from "@/axiosClient";
 import { onMounted, ref } from "vue";
-import ErrorModal from "./ErrorModal.vue";
+import ErrorModal from "./AlertModal.vue";
 
 const turmas = ref();
 const showModal = ref(false);

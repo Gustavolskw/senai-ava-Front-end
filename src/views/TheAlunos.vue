@@ -10,20 +10,20 @@
   </div>
 
   <Teleport to="body">
-    <ErrorModal :show="showModal" @close="showModal = false">
+    <AlertModal :show="showModal" @close="showModal = false">
       <template #header>
         <h3 class="text-danger">{{ errorHeader }}</h3>
       </template>
       <template #body>
         <p>{{ errorMessage }}</p>
       </template>
-    </ErrorModal>
+    </AlertModal>
   </Teleport>
 </template>
 
 <script setup>
 import NavBar from "@/components/NavBar.vue";
-import ErrorModal from "@/components/ErrorModal.vue";
+import AlertModal from "@/components/AlertModal.vue";
 import TheAlunoItem from "@/components/TheAlunoItem.vue";
 import axiosClient from "@/axiosClient";
 import { onMounted, ref } from "vue";
