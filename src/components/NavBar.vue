@@ -28,18 +28,22 @@
               <a class="nav-link fw-bold fs-5">Ranking </a>
             </router-link>
           </li>
-          <li class="nav-item ms-2" v-if="isLogged">
+          <li class="nav-item ms-2" v-if="user.role == 'ADMIN' || 'PROFFESOR'">
             <router-link
               class="nav-link fw-bold fs-5"
               href="#"
-              :to="{ name: 'alunos' }"
-              >Alunos</router-link
+              :to="{ name: 'gestao' }"
+              >Painel de Gestão</router-link
             >
           </li>
         </ul>
-        <button v-if="!isLogged" class="btn btn-primary" type="submit">
+        <router-link
+          v-if="!isLogged"
+          class="btn btn-primary"
+          :to="{ name: 'login' }"
+        >
           Login
-        </button>
+        </router-link>
         <div v-if="isLogged" class="d-flex align-items-center gap-2">
           <div class="dropdown">
             <i
@@ -59,7 +63,9 @@
                 </a>
               </li>
               <li>
-                <a class="dropdown-item text-center my-auto fw-bolder" href="#"
+                <a
+                  class="dropdown-item text-center my-auto fw-bolder"
+                  @click="logoutUser()"
                   >Sair<i class="bi bi-box-arrow-right fs-4 mx-2"></i>
                 </a>
               </li>
@@ -74,14 +80,56 @@
 </template>
 
 <script setup>
+import { jwtDecode } from "jwt-decode";
 import { onMounted, ref } from "vue";
-
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+const store = useStore();
 const name = ref();
 const isLogged = ref(false);
 
+const router = useRouter();
+
+const user = ref({
+  id: null,
+  email: "",
+  role: "",
+});
+
+function logoutUser() {
+  // Trigger Vuex action to remove token
+  store.dispatch("removeToken");
+
+  // Reset local state
+  isLogged.value = false;
+  user.value = { id: null, email: "", role: "" };
+  name.value = null;
+
+  // Redirect to the home route
+  router.push({ name: "home" });
+}
 onMounted(() => {
-  isLogged.value = true;
-  name.value = "Gustavo.luis";
+  const token = store.getters.getToken;
+  if (token) {
+    isLogged.value = true;
+
+    // Decodificar o token
+    try {
+      const decoded = jwtDecode(token);
+      isLogged.value = true;
+
+      // Definir parâmetros do usuário
+      user.value.id = decoded.id;
+      user.value.email = decoded.sub;
+      user.value.role = decoded.role;
+      name.value = user.value.email;
+      console.log(decoded);
+      // Se houver um campo "name" no token, definindo-o também
+      name.value = decoded.sub || "Usuário Desconhecido";
+    } catch (error) {
+      console.error("Erro ao decodificar o token:", error);
+    }
+  }
 });
 </script>
 

@@ -2,7 +2,9 @@
   <div
     class="d-flex align-items-center justify-content-center flex-column container-form"
   >
-    <form class="form-login d-flex align-items-center flex-column justify-content-center">
+    <form
+      class="form-login d-flex align-items-center flex-column justify-content-center"
+    >
       <img class="img-logo-senai" src="@/assets/img/senai-icon.png" />
       <div>
         <button type="button" class="google-login-btn">
@@ -27,7 +29,9 @@
         />
       </div>
       <div class="container-btn-acess w-100">
-        <button type="button" v-on:click="logingApp" class="btn-acesso">Acessar</button>
+        <button type="button" v-on:click="logingApp" class="btn-acesso">
+          Acessar
+        </button>
       </div>
       <div class="mt-4">
         <a class="esqueceu-link">Esqueceu o seu usuario ou senha?</a>
@@ -39,8 +43,10 @@
 <script setup>
 import axiosClient from "@/axiosClient";
 import { useStore } from "vuex";
-import { onMounted, ref } from "vue";
-
+import { useRouter } from "vue-router";
+import { ref, getCurrentInstance } from "vue";
+const { proxy } = getCurrentInstance();
+const router = useRouter(); // Importar o roteador para fazer navegação
 const store = useStore();
 const email = ref("");
 const password = ref("");
@@ -55,14 +61,43 @@ function logingApp() {
       console.log(data);
       store.dispatch("saveToken", data.data.token);
       console.log(store.getters.getToken);
+
+      let timerInterval;
+      proxy.$swal
+        .fire({
+          title: "Auto close alert!",
+          html: "I will close in <b></b> milliseconds.",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            proxy.$swal.showLoading();
+            const timer = proxy.$swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${proxy.$swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        })
+        .then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === proxy.$swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+            router.push("/home"); // Redireciona para a rota /home
+          }
+        });
     })
-    .catch(({ response }) => {
-      console.log(response);
+    .catch((error) => {
+      proxy.$swal.fire({
+        icon: "error",
+        title: "Oops",
+        text: error.message,
+      });
+
+      console.log(error);
     });
 }
-onMounted(() => {
-  console.log(store.getters.getToken);
-});
 </script>
 
 <style scoped>

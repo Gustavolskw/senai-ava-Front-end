@@ -1,9 +1,11 @@
+import RankList from "@/components/RankList.vue";
 import CadastroAdmin from "@/views/CadastroAdmin.vue";
 import CadastroAluno from "@/views/CadastroAluno.vue";
 import CadastroProfessor from "@/views/CadastroProfessor.vue";
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
-import TheAlunos from "@/views/TheAlunos.vue";
+import PainelDeGestao from "@/views/PainelDeGestao.vue";
+//import TheAlunos from "@/views/TheAlunos.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -20,12 +22,12 @@ const routes = [
     {
         path: "/agendamentos",
         name: "agendamentos",
-        component: LoginPage
+        component: RankList
     },
     {
-        path: "/alunos",
-        name: "alunos",
-        component: TheAlunos
+        path: "/painel-gestao",
+        name: "gestao",
+        component: PainelDeGestao
     },
     {
         path: "/aluno/register",

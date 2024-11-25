@@ -1,6 +1,6 @@
 <template>
   <ContentContainerMain>
-    <NavBarAside></NavBarAside>
+    <NavBarAside :panel-name="'Painel de Gestão'"></NavBarAside>
   </ContentContainerMain>
 </template>
 
