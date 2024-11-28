@@ -7,6 +7,7 @@
 <style scoped>
 .main {
   height: 100vh;
+  width: 100%;
 }
 
 .dropdown-btn {
